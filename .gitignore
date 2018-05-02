@@ -4,3 +4,4 @@
 *.swp
 .redcar
 .DS_Store
+.idea/
