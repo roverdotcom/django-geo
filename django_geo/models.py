@@ -7,7 +7,7 @@ class ZipCode(models.Model):
     latitude = models.DecimalField(db_index=True, max_digits=10, decimal_places=6)
     longitude = models.DecimalField(db_index=True, max_digits=10, decimal_places=6)
     state = models.CharField(max_length=150)
-    city = models.CharField(max_length=30)
+    city = models.CharField(max_length=150)
     country_code = models.CharField(max_length=2, blank=False)
 
     class Meta:
