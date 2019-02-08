@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
+from __future__ import unicode_literals
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
