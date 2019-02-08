@@ -1,3 +1,7 @@
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from builtins import str
 from decimal import Decimal
 
 from django.test import TestCase
@@ -16,7 +20,7 @@ class PointTest(TestCase):
         point2 = Point('47.2422', '-122.245')
         self.assertEqual(Decimal('47.2422'), point1.lat)
         self.assertEqual(Decimal('47.2422'), point2.latitude)
-        point3 = Point(lat=unicode('47.2422'), lng=unicode('-122.245'))
+        point3 = Point(lat=str('47.2422'), lng=str('-122.245'))
         point4 = Point(latitude='47.2422', longitude='-122.245')
         self.assertEqual(point3.latitude, point4.latitude)
         self.assertRaises(Exception, Point, latitude='42.00')

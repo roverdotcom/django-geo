@@ -1,5 +1,11 @@
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import str
+from past.utils import old_div
+from builtins import object
 from decimal import Decimal
-from distances import distances
+from .distances import distances
 
 from geopy import Point as GeoPyPoint
 from geopy.distance import distance as geopy_distance
@@ -31,14 +37,14 @@ class Point(object):
         return not (self == other)
     def __init__(self, *args, **kwargs):
         if 'lat' in kwargs and 'lng' in kwargs:
-            self.lat = Decimal(unicode(kwargs.pop('lat')))
-            self.lng = Decimal(unicode(kwargs.pop('lng')))
+            self.lat = Decimal(str(kwargs.pop('lat')))
+            self.lng = Decimal(str(kwargs.pop('lng')))
         elif 'latitude' in kwargs and 'longitude' in kwargs:
-            self.lat = Decimal(unicode(kwargs.pop('latitude')))
-            self.lng = Decimal(unicode(kwargs.pop('longitude')))
+            self.lat = Decimal(str(kwargs.pop('latitude')))
+            self.lng = Decimal(str(kwargs.pop('longitude')))
         elif len(args) == 2:
-            self.lat = Decimal(unicode(args[0]))
-            self.lng = Decimal(unicode(args[1]))
+            self.lat = Decimal(str(args[0]))
+            self.lng = Decimal(str(args[1]))
         else:
             raise Exception("Invalid constructor params to Point")
         if self.lat > self.MAX_LATITUDE or self.lat < self.MIN_LATITUDE:
@@ -113,7 +119,7 @@ class Bounds(object):
         sw = d.destination(point, 225)
 
         return Bounds(
-            sw=Point(Decimal(sw.latitude), Decimal(sw.longitude)), 
+            sw=Point(Decimal(sw.latitude), Decimal(sw.longitude)),
             ne=Point(Decimal(ne.latitude), Decimal(ne.longitude)))
 
     @classmethod
@@ -124,15 +130,15 @@ class Bounds(object):
     def get_center_coords(cls, min_lat, min_lng, max_lat, max_lng):
         approx_distance = distances.geographic_distance(
                 min_lat, min_lng, max_lat, max_lng,)
-        
+
         d = geopy_distance(kilometers=approx_distance / 2.0)
         center = d.destination(GeoPyPoint(max_lat, max_lng), 225)
 
         return (center.latitude, center.longitude,)
-        
+
     def get_radius(self):
         approx_distance = distances.geographic_distance(
                 self.sw.lat, self.sw.lng,
                 self.ne.lat, self.ne.lng)
-        return approx_distance / 2
+        return old_div(approx_distance, 2)
 
