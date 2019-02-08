@@ -1,3 +1,8 @@
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from builtins import object
 from django.db import models
 ADDRESS_DISPLAY_CHARS = 25
 
@@ -10,7 +15,7 @@ class ZipCode(models.Model):
     city = models.CharField(max_length=150)
     country_code = models.CharField(max_length=2, blank=False)
 
-    class Meta:
+    class Meta(object):
         unique_together = [('zip_code', 'country_code')]
 
     def __unicode__(self):
